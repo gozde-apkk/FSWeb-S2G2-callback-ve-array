@@ -5,17 +5,21 @@ const { fifaData } = require('./fifa.js')
 	Verilen datayı parçalayarak aşağıdaki verileri (console.log-ing) elde ederek pratik yapın. 
 	
 	💡 İPUCU: Öncelikle datayı filtrelemek isteyebilirsiniz */
-
+	const dunyaKupasiFinali2014 = fifaData.filter(element =>{
+		return element.Year === 2014 && element.Stage === 'Final';
+	})
+	
+	console.log(dunyaKupasiFinali2014);
 //(a) 2014 Dünya kupası Finali Evsahibi takım ismi (dizide "Home Team Name" anahtarı)
-
+console.log(dunyaKupasiFinali2014[0]["Home Team Name"]);
 //(b) 2014 Dünya kupası Finali Deplasman takım ismi  (dizide "Away Team Name" anahtarı)
-
+console.log(dunyaKupasiFinali2014[0]["Away Team Name"]);
 //(c) 2014 Dünya kupası finali Ev sahibi takım golleri (dizide "Home Team Goals" anahtarı)
-
+console.log(dunyaKupasiFinali2014[0]["Home Team Goals"]);
 //(d)2014 Dünya kupası finali Deplasman takım golleri  (dizide "Away Team Goals" anahtarı)
-
+console.log(dunyaKupasiFinali2014[0]["Away Team Goals"]);
 //(e) 2014 Dünya kupası finali kazananı*/
-
+console.log(dunyaKupasiFinali2014[0]['Win conditions']) ;
 
 /*  Görev 2: 
 	Finaller adlı fonksiyonu kullanarak aşağıdakileri uygulayın:
@@ -25,13 +29,14 @@ const { fifaData } = require('./fifa.js')
 	💡 İPUCU - verilen data içindeki nesnelerin(objects) "Stage" anahtarına bakmalısınız
 */
 
-function Finaller(/* kodlar buraya */) {
-	
-    /* kodlar buraya */
+function Finaller(fifaData) {
+   let finalArr = fifaData.filter((match)=>{
+	return match.Stage === "Final"
+   })
+   return finalArr;
 }
 
-
-
+console.log(Finaller(fifaData));
 /*  Görev 3: 
 	Bir higher-order fonksiyonu olan Yillar isimli fonksiyona aşağıdakileri uygulayın: 
 	1. fifaData dizisini(array) fonksiyonun birinci parametresi olarak alacak
@@ -39,11 +44,13 @@ function Finaller(/* kodlar buraya */) {
 	3. Finaller data setindeki tüm yılları içeren "years" adındaki diziyi(array) döndürecek
 	*/
 
-function Yillar(/* kodlar buraya */) {
-	
-    /* kodlar buraya */
+function Yillar(fifaData , callback) {
+    let years = callback(fifaData).map((match) =>{
+		return match.Year;
+	})
+	return years;
 }
-
+console.log(Yillar(fifaData, Finaller));
 
 /*  Görev 4: 
 	Bir higher-order fonksiyonunu olan Kazananlar isimli fonksiyona aşağıdakileri uygulayın:  
