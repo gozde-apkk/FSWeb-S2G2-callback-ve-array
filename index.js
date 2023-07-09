@@ -60,11 +60,21 @@ console.log(Yillar(fifaData, Finaller));
 	💡 İPUCU: Beraberlikler(ties) için şimdilik endişelenmeyin (Detaylı bilgi için README dosyasına bakabilirsiniz.)
 	4. Tüm kazanan ülkelerin isimlerini içeren `kazananlar` adında bir dizi(array) döndürecek(return)  */ 
 
-function Kazananlar(/* kodlar buraya */) {
-	
-    /* kodlar buraya */
+function Kazananlar(fifaData , callback) {
+	let kazananTakimlar = [];
+	let finaller = callback(fifaData);
+	for (let i = 0; i< finaller.length; i++){
+		if(finaller[i]["Home Team Goals"] > finaller[i]["Away Team Goals"]){
+			kazananTakimlar.push(finaller[i]["Home Team Name"]);
+		}else{
+			kazananTakimlar.push(finaller[i]["Away Team Name"])
+		}
+	}
+	return kazananTakimlar;
 	
 }
+
+console.log(Kazananlar(fifaData , Finaller));
 
 
 
@@ -79,11 +89,25 @@ function Kazananlar(/* kodlar buraya */) {
 	💡 İPUCU: her cümlenin adım 4'te belirtilen cümleyle birebir aynı olması gerekmektedir.
 */
 
-function YillaraGoreKazananlar(/* kodlar buraya */) {
-	
-/* kodlar buraya */
-
-}
+function YillaraGoreKazananlar(
+	fifaVerileri,
+	finallerCallback,
+	yillarCallback,
+	kazananlarCallback
+  ) {
+	let kazananlarListesi = finallerCallback(fifaVerileri).map((mac, i) => {
+	  return (
+		yillarCallback(fifaVerileri, finallerCallback)[i] +
+		" yılında, " +
+		kazananlarCallback(fifaVerileri, finallerCallback)[i] +
+		" dünya kupasını kazandı!"
+	  );
+	});
+	return kazananlarListesi;
+  }
+  
+  console.log(YillaraGoreKazananlar(fifaData, Finaller, Yillar, Kazananlar));
+  
 
 
 /*  Görev 6: 
@@ -100,11 +124,15 @@ function YillaraGoreKazananlar(/* kodlar buraya */) {
 	
 */
 
-function OrtalamaGolSayisi(/* kodlar buraya */) {
-	
-    /* kodlar buraya */
-	
-}
+function OrtalamaGolSayisi(finaller) {
+	const totalGoals = finaller.reduce(
+	  (total, match) =>
+		total + match["Home Team Goals"] + match["Away Team Goals"],
+	  0
+	);
+  
+	return (totalGoals / finaller.length).toFixed(2);
+  }
 
 
 
